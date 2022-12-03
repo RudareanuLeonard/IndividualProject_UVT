@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>registerPage</title>
+    <link rel="stylesheet" href="./registerPage.css">
+</head>
+
+<body>
+
+    <!--NAV BAR-->
+    <div class="nav-bar-main-class">
+        <div class="nav-bar-logo">
+            <img src="./logo.png" class="nav-bar-logo-img">
+        </div>
+
+        <div class="nav-bar-links">
+
+            <div class="nav-bar-links-register">
+                <a href="./WelcomePage.html">
+                    <button class="nav-bar-links-register-button">
+                        HOME
+                    </button>
+                </a>
+            </div>            
+
+            <div class="nav-bar-links-login">
+                <a href="">
+                    <button class="nav-bar-links-login-button">
+                        LOG IN
+                    </button>
+                </a>
+            </div>            
+
+        </div>
+
+    </div>
+    <!--NAV BAR END-->
+
+
+
+    <!--REGISTER FORM START-->
+
+
+
+    <div class="page-content">
+		<div class="form-v10-content">
+			<form class="form-detail" action="#" method="post" id="myform">
+				<div class="form-left">
+					<h2>Personal Infomation</h2>
+					<div class="form-row">
+						<!-- <select name="title">
+						    <option class="option" value="title">Title</option>
+						    <option class="option" value="businessman">Businessman</option>
+						    <option class="option" value="reporter">Reporter</option>
+						    <option class="option" value="secretary">Secretary</option>
+						</select> -->
+
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div>
+					<div class="form-group">
+						<div class="form-row form-row-1">
+							<input type="text" name="first_name" id="first_name" class="input-text" placeholder="First Name" required>
+						</div>
+						<div class="form-row form-row-2">
+							<input type="text" name="last_name" id="last_name" class="input-text" placeholder="Last Name" required>
+						</div>
+					</div>
+					<div class="form-row"> <!--DAY-->
+						<select name="position">
+                            <option value="employee">Day</option>
+						    <option value="position">1</option>
+						    <option value="director">2</option>
+						    <option value="manager">3</option>
+						    <option value="employee">4</option>
+                            <option value="employee">5</option>
+                            <option value="employee">6</option>
+                            <option value="employee">7</option>
+                            <option value="employee">8</option>
+                            <option value="employee">9</option>
+                            <option value="employee">10</option>
+                            <option value="employee">11</option>
+                            <option value="employee">12</option>
+                            <option value="employee">13</option>
+                            <option value="employee">14</option>
+                            <option value="employee">15</option>
+                            <option value="employee">16</option>
+                            <option value="employee">17</option>
+                            <option value="employee">18</option>
+                            <option value="employee">19</option>
+                            <option value="employee">20</option>
+                            <option value="employee">21</option>
+                            <option value="employee">22</option>
+                            <option value="employee">23</option>
+                            <option value="employee">24</option>
+                            <option value="employee">25</option>
+                            <option value="employee">26</option>
+                            <option value="employee">27</option>
+                            <option value="employee">28</option>
+                            <option value="employee">29</option>
+                            <option value="employee">30</option>
+                            <option value="employee">31</option>
+						</select>
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div> <!--DAY END-->
+
+                    <div class="form-row"> <!--MONTH-->
+						<select name="position" aria-placeholder="Month">
+                            <option value="employee">Month</option>
+						    <option value="position">January</option>
+						    <option value="director">February</option>
+						    <option value="manager">March</option>
+						    <option value="employee">April</option>
+                            <option value="employee">May</option>
+                            <option value="employee">June</option>
+                            <option value="employee">July</option>
+                            <option value="employee">August</option>
+                            <option value="employee">September</option>
+                            <option value="employee">October</option>
+                            <option value="employee">November</option>
+                            <option value="employee">December</option>
+						</select>
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div>
+                    <!--MONTH END-->
+
+					<div class="form-row">
+						<input type="text" name="company" class="company" id="company" placeholder="Year" required>
+					</div>
+					
+						<div class="form-row form-row-3">
+							<input type="text" name="business" class="business" id="business" placeholder="Email" required>
+						</div>
+
+                        <div class="form-row form-row-3">
+							<input type="password" name="business" class="business" id="business" placeholder="Password" required>
+						</div>
+
+
+                        <div class="form-row form-row-3">
+							<input type="text" name="business" class="business" id="business" placeholder="Phone Number" required>
+						</div>
+
+				</div>
+				<div class="form-right">
+					<h2>Employment Details</h2>
+					
+                    <div class="form-row"> <!--COMPANY POS START-->
+						<select name="country">
+						    <option value="country">Country</option>
+                            <option value="country">Software Developer</option>
+                            <option value="country">Accountant</option>
+                            <option value="country">Lawyer</option>
+                            <option value="country">System Administrator</option>
+						</select>
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div>
+                    <!--COMPANY POS END-->
+                    
+		
+                    <div class="form-row"> <!--Language 1 START-->
+						<select name="country">
+						    <option value="country">Level of speaking English?</option>
+                            <option value="country">Expert/Native</option>
+                            <option value="country">Advanced</option>
+                            <option value="country">Medium</option>
+                            <option value="country">Begginer</option>
+                            <option value="country">I don't speak English</option>
+						</select>
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div>
+                    <!--Language1 POS END-->
+
+                    <div class="form-row"> <!--Language 2 START-->
+						<select name="country">
+						    <option value="country">Level of speaking French?</option>
+                            <option value="country">Expert/Native</option>
+                            <option value="country">Advanced</option>
+                            <option value="country">Medium</option>
+                            <option value="country">Begginer</option>
+                            <option value="country">I don't speak French</option>
+						</select>
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div>
+                    <!--Language2 POS END-->
+                    
+
+                    <div class="form-row"> <!--Language 3 START-->
+						<select name="country">
+						    <option value="country">Level of speaking German?</option>
+                            <option value="country">Expert/Native</option>
+                            <option value="country">Advanced</option>
+                            <option value="country">Medium</option>
+                            <option value="country">Begginer</option>
+                            <option value="country">I don't speak German</option>
+						</select>
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div>
+                    <!--Language 3 POS END-->
+                    
+                    
+					
+					<div class="form-checkbox">
+						<label class="container"><p>I do accept the <a href="#" class="text">Terms and Conditions</a> of your site.</p>
+						  	<input type="checkbox" name="checkbox">
+						  	<span class="checkmark"></span>
+						</label>
+					</div>
+					<div class="form-row-last">
+						<input type="submit" name="register" class="register" value="Register Badge">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+    <!--REGISTER FORM END-->
+    
+</body>
+
+</html>
