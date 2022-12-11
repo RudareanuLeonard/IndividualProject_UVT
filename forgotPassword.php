@@ -115,10 +115,10 @@ session_start();
         // header('Location: '.$logInURL);
 
         $input_email = $_POST["email"];
-        $_SESSION["input_email"] = $input_email;
+        // $_SESSION["input_email"] = $input_email;
         
         $input_security_word = $_POST["security_word"];
-        $_SESSION["input_security_word"] = $input_security_word;
+        // $_SESSION["input_security_word"] = $input_security_word;
 
 
         $searchInSql = "SELECT * from employees where email like '".$input_email."'";
@@ -129,10 +129,10 @@ session_start();
             $_SESSION["inDb"] = "in Db";
             while($row = mysqli_fetch_array($searchInSql_result)){
                 $actual_security_word = $row["security_word"];
-                $_SESSION["actual_security_word"] = $actual_security_word;
+                // $_SESSION["actual_security_word"] = $actual_security_word;
 
                 $password = $row["password"];
-                $_SESSION["password"] = $password;
+                // $_SESSION["password"] = $password;
             }
 
 
@@ -153,12 +153,29 @@ session_start();
     
 
 
-            if(strcmp($actual_security_word, $input_security_word) == 0)
+            if(strcmp($actual_security_word, $input_security_word) == 0) // security word is GOOD
                 sendMail("leonardrudareanu@gmail.com", $password, $email_sender);
+            else{ //security word is NOT GOOD
+                echo("
+                <script>
+                    alert('Cuvantul de securitate nu este corect');
+                    window.location.replace('./forgotPassword.php');
+                </script>
+                
+                ");
+
+            }
+            
 
         }else{//EMAIL NOT IN DB
-                
 
+            echo("
+            <script>
+                alert('Email-ul nu exista in db');
+                window.location.replace('./forgotPassword.php');
+            </script>
+            
+            ");
             
         }
 
