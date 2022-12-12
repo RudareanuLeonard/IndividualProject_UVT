@@ -1,50 +1,55 @@
+<br>
 <?php
- function UpdateGraph() {
-    StopGraphLoop();
-    interval = parseInt($('#interval').val());
-    npoints = parseInt($('#npoints').val());
-    maxIterations = parseInt($('#maxIterations').val());
-    niters = 0;
-    GraphUpdate = setInterval(runUpdate, interval);
-}
+// echo "software dev = ".$software_developers;
+// echo "<br> accountants = ".$accountants;
+// echo "<br> sysadmins = ".$sysadmins;
+// echo "<br> managers = ".$managers;
 
+$employeesValues = array(
+    array("y" => $software_developers, "label" => "Software Developers"),
+    array("y" => $accountants, "label" => "Accountants"),
+    array("y" => $sysadmins, "label" => "System Administrators"),
+    array("y" => $managers, "label" => "Managers"),
+);
 
-function runUpdate() {
-    if (niters < maxIterations) {
-        BuildDataArray();
-        Graph.series[0].data = GraphData;
-        Graph.replot({resetAxes:true});
-        niters++;
-    }
-    else {
-        StopGraphLoop();
-    }
-}
-
-function StopGraphLoop() {
-    clearInterval(GraphUpdate);
-}
-
-$pc = new C_PhpChartX(array($GraphData),'Graph');
-$pc->add_plugins(array('canvasTextRenderer','canvasAxisTickRenderer','canvasAxisLabelRenderer','highlighter','canvasOverlay','cursor','pointLabels'),true);
-
-$pc->set_title(array('text'=>'Test Data Run'));    
-$pc->set_cursor(array('show'=>false));
-$pc->set_point_labels(array('show'=>false));
-$pc->set_highlighter(array('show'=>false));
-
-$pc->set_axes_default(array(
-    'pad'=>0.05,
-    'labelRenderer'=>'plugin::CanvasAxisLabelRenderer',
-    'tickRenderer'=>'plugin::CanvasAxisTickRenderer',
-    'labelOptions'=>array('fontSize'=>'13pt')
-));
-$pc->set_axes(array(
-        'xaxis'=> array('label'=> 'Number'),
-        'yaxis'=> array('label'=>'Value')
-    ));
-
-// should be the last method to call
-$pc->draw(800,500);
 
 ?>
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+window.onload = function() {
+ 
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	title:{
+		text: "Company Employees"
+	},
+	axisY: {
+		title: "Employees",
+		includeZero: true,
+		prefix: "nr. ",
+		suffix:  "Employees"
+	},
+	data: [{
+		type: "bar",
+		// yValueFormatString: "$#,##0K",
+		indexLabel: "{y}", // the string on the chart(values of each line)
+		indexLabelPlacement: "inside", //inside chart
+		indexLabelFontWeight: "bolder", // text appear more bold
+		indexLabelFontColor: "white", //text color
+		dataPoints: <?php echo json_encode($employeesValues, JSON_NUMERIC_CHECK); ?> // the actual chart => printing the array
+	}]
+});
+chart.render();
+ 
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+

@@ -52,7 +52,7 @@ if(isset($_POST["login_form"]))
 
 
         if(strtolower($pos_in_company) == "accountant"){ // welcome page for accountant
-        $welcomePageAfterLogInAccountant = "./welcomePageAfterLogInAccountant.php";
+        $welcomePageAfterLogInAccountant = "./welcomePageAfterLogInAccountantCompanyFundsAnalysis.php";
         header('Location: '.$welcomePageAfterLogInAccountant);
         }
 
