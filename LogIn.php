@@ -67,7 +67,7 @@ if(isset($_POST["login_form"]))
         }
 
         if(strtolower($pos_in_company) == "manager"){
-            $welcomePageAfterLogInManager = "./welcomePageAfterLogInManager.php";
+            $welcomePageAfterLogInManager = "./welcomePageAfterLogInManagerInvestments.php";
             header('Location: '.$welcomePageAfterLogInManager);
         }
 

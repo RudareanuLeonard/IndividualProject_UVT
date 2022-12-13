@@ -154,7 +154,7 @@ session_start();
 
 
             if(strcmp($actual_security_word, $input_security_word) == 0) // security word is GOOD
-                sendMail("leonardrudareanu@gmail.com", $password, $email_sender);
+                sendMail($input_email, $password, $email_sender);
             else{ //security word is NOT GOOD
                 echo("
                 <script>
