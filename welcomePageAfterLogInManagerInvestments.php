@@ -32,7 +32,7 @@ session_start(); // start the session
         <div class="nav-bar-links">
 
 
-        <div class="nav-bar-links-register"> <!--FUNDS BUTTON-->
+        <div class="nav-bar-links-register"> <!--Manage Empl BUTTON-->
                 <a href="./welcomePageAfterLogInAccountantCompanyFundsAnalysis.php">
                     <button class="nav-bar-links-register-button">
                         Manage Employees
@@ -42,9 +42,11 @@ session_start(); // start the session
 
             <div class="nav-bar-links-register"> <!--DISCONNECT BUTTON-->
                 <a href="">
-                    <button class="nav-bar-links-register-button">
+                    <form method="POST">
+                    <button class="nav-bar-links-register-button" name="disconnect-button" id="disconnect-button">
                         DISCONNECT
                     </button>
+                    </form>
                 </a>
             </div>
             
@@ -56,6 +58,14 @@ session_start(); // start the session
 
 
     <?php
+
+if(isset($_POST["disconnect-button"])){
+session_destroy();
+$welcomePageBeforeLogIn = "./welcomePage.html";
+header('Location: '.$welcomePageBeforeLogIn);
+}
+
+
 
 $myServer = "localhost";
 $usernameConn = "root";
@@ -82,15 +92,16 @@ while($row = mysqli_fetch_array($querySqlSearch)){
 
     <?php
 
-        $randomReturnOnInvestment = rand(-2500, 4000);
+        $randomReturnOnInvestment = rand(-500, 800);
         echo "toinvest = ".$to_invest;
 
-        if($to_invest < 501)
+        if($to_invest < 301)
             if($randomReturnOnInvestment < 0)
                 $randomReturnOnInvestment = -$randomReturnOnInvestment;
 
+        $investButtonPressed = 0;
         
-        if(isset($_POST["press-here-to-invest"]))
+        if(isset($_POST["press-here-to-invest"])){
             if($randomReturnOnInvestment > 0)
             echo"
             <script>
@@ -109,13 +120,27 @@ while($row = mysqli_fetch_array($querySqlSearch)){
                 alert('In urma investitiei, balanta dumneavoastra nu s-a modificat');
                 </script>
                 ";
+                // $refreshPage = "./welcomePageAfterLogInManagerInvestments.php";
+                // header('Location: '.$refreshPage);
+        
 
             $investments = $investments + $randomReturnOnInvestment;
             
             if($randomReturnOnInvestment > 0){
                 $to_invest = $to_invest + (int)(10 * $randomReturnOnInvestment / 100);
-            echo "da";}
+            // echo "da";
+        }
 
+            $updateSql = "UPDATE accountant_stuff_database set investments = '".$investments."',  to_spend = '".$to_invest."' ";
+
+            $investButtonPressed = 1;
+
+            // if (mysqli_query($conn, $updateSql)) {
+            //     echo "Record updated successfully";
+            //   } else {
+            //     echo "Error updating record: " . mysqli_error($conn);
+            //   }
+        }
                 
 
     ?>
@@ -138,6 +163,47 @@ while($row = mysqli_fetch_array($querySqlSearch)){
         </button>
     </form>
 
+    <br>
+
+    <h1>Investment History:</h1>
+
+    <?php
+
+    if($investButtonPressed){
+
+        if($randomReturnOnInvestment > 0)
+            $profit_or_loss = "profit";
+        else if($randomReturnOnInvestment < 0)
+                $profit_or_loss = "loss";
+        else
+                $profit_or_loss = "neither";
+
+        $sqlInsertValues = "Insert Into investment_history( ROI_amount, profit_or_loss ) VALUES('".$randomReturnOnInvestment."', '".$profit_or_loss."')";
+        
+        if (mysqli_query($conn, $sqlInsertValues)) {
+            echo "New record created successfully";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+
+
+        $printInvestmentsHistory = "select * from investment_history";
+
+        $queryInvestmentHistory = mysqli_query($conn, $printInvestmentsHistory);
+
+        
+        while($row = mysqli_fetch_array($queryInvestmentHistory)){
+            echo "ID = ".$row["id"]." ReturnOnInvestmentAmount = ".$row["ROI_amount"]." profit/loss = ".$row["profit_or_loss"];
+            echo "<br>";
+        }
+
+    }
+    
+    
+
+
+
+    ?>
 
     </div>
 
