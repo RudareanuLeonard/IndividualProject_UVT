@@ -46,9 +46,11 @@ session_start(); // start the session
 
             <div class="nav-bar-links-register"> <!--DISCONNECT BUTTON-->
                 <a href="">
-                    <button class="nav-bar-links-register-button">
+                <form method="POST">
+                    <button class="nav-bar-links-register-button" name="disconnect-button" id="disconnect-button">
                         DISCONNECT
                     </button>
+                </form>
                 </a>
             </div>
             
@@ -83,6 +85,16 @@ $passwordConn = "";
 $dbnameConn = "manageitproject";
 
 $conn = mysqli_connect($myServer, $usernameConn, $passwordConn, $dbnameConn);
+
+
+
+if(isset($_POST["disconnect-button"])){
+    session_destroy();
+    $welcomePageBeforeLogIn = "./welcomePage.html";
+    header('Location: '.$welcomePageBeforeLogIn);
+    }
+    
+
 
 $sqlValues = "select * from accountant_stuff_database";
 $query_result = mysqli_query($conn, $sqlValues);

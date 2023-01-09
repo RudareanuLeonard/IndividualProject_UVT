@@ -54,9 +54,83 @@ $query_email = mysqli_query($conn, $searchEmail);
 
 
 if(mysqli_num_rows($query_email) <= 0){//email not in db => can add in db
+    $salary = rand(1000,5500);
+    $security_word = "securityWord".(strval(rand(1,10)));
+    // $insert_SQL = "INSERT INTO employees(lastName, firstName, birthdate, phone, email, yearsOfExperience, positionInCompany, speakEnglish, speakFrench, speakGerman, country, `password`, salary, security_word)
+    //  values ('".$first_name."', '".$last_name."', '".$birth_date."', '".$phone_number."', '".$email."', '".$years_of_experience."', '".$pos_in_company."', '".$english."', '".$french."', '".$german."', '".$country."', '".$password.", '".$salary."', '".$security_word."')";
 
-    $insert_SQL = "INSERT INTO employees(lastName, firstName, birthdate, phone, email, yearsOfExperience, positionInCompany, speakEnglish, speakFrench, speakGerman, country, `password`)
-     values ('".$first_name."', '".$last_name."', '".$birth_date."', '".$phone_number."', '".$email."', '".$years_of_experience."', '".$pos_in_company."', '".$english."', '".$french."', '".$german."', '".$country."', '".$password."')";
+    $insert_SQL = "   INSERT INTO employees
+                        (
+                            lastName,
+                            firstName,
+                            birthdate,
+                            phone,
+                            email,
+                            yearsOfExperience,
+                            positionInCompany,
+                            speakEnglish,
+                            speakFrench,
+                            speakGerman,
+                            country,
+                            `password`,
+                            security_word,
+                            salary
+                        )
+    
+    VALUES
+        (
+            '".$last_name."',
+            '".$first_name."',
+            '".$birth_date."',
+            '".$phone_number."',
+            '".$email."',
+            '".$years_of_experience."',
+            '".$pos_in_company."',
+            '".$english."',
+            '".$french."',
+            '".$german."',
+            '".$country."',
+            '".$password."',
+            '".$security_word."',
+            '".$salary."'
+        )
+    
+                    ";
+
+    //now we have to update the account_stuff_database
+    $numOfSoftwareDevelopers = 0;
+    $numberOfAccountants = 0;
+    $numberOfSystemAdministrators = 0;
+    $numberOfManagers = 0;
+
+    $query = "select * from employees";
+    $query_all = mysqli_query($conn, $query);
+
+    while($row = mysqli_fetch_array($query_all)){
+        if($row["positionInCompany"] == "Software Developer")
+            $numOfSoftwareDevelopers = $numOfSoftwareDevelopers + 1;
+            
+        if($row["positionInCompany"] == "Accountant")
+            $numberOfAccountants = $numberOfAccountants + 1;
+            
+        if($row["positionInCompany"] == "System Administrator")
+            $numberOfSystemAdministrators = $numberOfSystemAdministrators + 1;
+        
+        if($row["positionInCompany"] == "Manager")
+            $numberOfManagers = $numberOfManagers + 1;
+    }
+// echo"SD = ".$numOfSoftwareDevelopersw."<br>";
+// echo"Acc = ".$numberOfAccountantsc."<br>";
+// echo"SA = ".$numberOfSystemAdministrators."<br>";
+// echo "MA =".$numberOfManagers;
+
+    $sql_update = "UPDATE accountant_stuff_database SET numberOfSoftwareDevelopers = ".$numOfSoftwareDevelopers;
+    $sql_update = "UPDATE accountant_stuff_database SET numberOfAccountants = ".$numberOfAccountants;
+    $sql_update = "UPDATE accountant_stuff_database SET numberOfSystemAdministrators = ".$numberOfSystemAdministrators;
+    $sql_update = "UPDATE accountant_stuff_database SET numberOfManagers = ".$numberOfManagers;
+
+
+
 }
 else{//email in db => error! try again
 echo"already in db<br>";

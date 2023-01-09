@@ -42,7 +42,7 @@ if(isset($_POST["login_form"]))
     }
 
     if(mysqli_num_rows($query_result) > 0){ // if logged in, redirect to welcomePageAfterLogIn
-        echo("TE-AI LOGAT");
+        //echo("TE-AI LOGAT");
         session_start(); //starts the session
         $_SESSION["logInEmail"] = $email; // global SESSION email_after_login var
         $_SESSION["logInPassword"] = $password; // global SESSION password_after_login var
@@ -56,7 +56,7 @@ if(isset($_POST["login_form"]))
         header('Location: '.$welcomePageAfterLogInAccountant);
         }
 
-        if(strtolower($pos_in_company) == "softoware developer"){ // welcome page for software dev
+        if(strtolower($pos_in_company) == "software developer"){ // welcome page for software dev
             $welcomePageAfterLogInSoftwareDeveloper = "./welcomePageAfterLogInSoftwareDeveloper.php";
             header('Location: '.$welcomePageAfterLogInSoftwareDeveloper);
         }

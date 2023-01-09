@@ -43,9 +43,11 @@ session_start(); // start the session
 
             <div class="nav-bar-links-register"> <!--DISCONNECT BUTTON-->
                 <a href="">
-                    <button class="nav-bar-links-register-button">
+                <form method="POST">
+                    <button class="nav-bar-links-register-button" name="disconnect-button" id="disconnect-button">
                         DISCONNECT
                     </button>
+                </form>
                 </a>
             </div>
             
@@ -54,6 +56,10 @@ session_start(); // start the session
 
     </div>
     <!--NAV BAR END-->
+
+
+
+
 
 <?php
 
@@ -65,37 +71,126 @@ session_start(); // start the session
 
     $conn = mysqli_connect($myServer, $usernameConn, $passwordConn, $dbnameConn);
 
-    $sqlValues = "select * from accountant_stuff_database";
-    $query_result = mysqli_query($conn, $sqlValues);
+    // $sqlValues = "select * from accountant_stuff_database";
+    // $query_result = mysqli_query($conn, $sqlValues);
 
 
+    if(isset($_POST["disconnect-button"])){
+        session_destroy();
+        $welcomePageBeforeLogIn = "./welcomePage.html";
+        header('Location: '.$welcomePageBeforeLogIn);
+        }
+        
     
-    while($row = mysqli_fetch_array($query_result)){
-        $software_developers = $row["numberOfSoftwareDevelopers"];
-        $accountants = $row["numberOfAccountants"];
-        $sysadmins = $row["numberSystemAdministrators"];
-        $managers = $row["numberOfManagers"];
-    }
+    // while($row = mysqli_fetch_array($query_result)){
+    //     $software_developers = $row["numberOfSoftwareDevelopers"];
+    //     $accountants = $row["numberOfAccountants"];
+    //     $sysadmins = $row["numberSystemAdministrators"];
+    //     $managers = $row["numberOfManagers"];
+    // }
 
-    echo "software dev = ".$software_developers;
-    echo "<br> accountants = ".$accountants;
-    echo "<br> sysadmins = ".$sysadmins;
-    echo "<br> managers = ".$managers;
+    // echo "software dev = ".$software_developers;
+    // echo "<br> accountants = ".$accountants;
+    // echo "<br> sysadmins = ".$sysadmins;
+    // echo "<br> managers = ".$managers;
+
+
+    $query = "select * from employees";
+    $query_all = mysqli_query($conn, $query);
+
+    $numOfSoftwareDevelopers = 0;
+    $numberOfAccountants = 0;
+    $numberOfSystemAdministrators = 0;
+    $numberOfManagers = 0;
+
+    while($row = mysqli_fetch_array($query_all)){
+        if($row["positionInCompany"] == "Software Developer")
+            $numOfSoftwareDevelopers = $numOfSoftwareDevelopers + 1;
+            
+        if($row["positionInCompany"] == "Accountant")
+            $numberOfAccountants = $numberOfAccountants + 1;
+            
+        if($row["positionInCompany"] == "System Administrator")
+            $numberOfSystemAdministrators = $numberOfSystemAdministrators + 1;
+        
+        if($row["positionInCompany"] == "Manager")
+            $numberOfManagers = $numberOfManagers + 1;
+    }
+echo"SD = ".$numOfSoftwareDevelopers."<br>";
+echo"Acc = ".$numberOfAccountants."<br>";
+echo"SA = ".$numberOfSystemAdministrators."<br>";
+echo "MA =".$numberOfManagers."<br>";
 
 $employeesValues = array(
-    array("y" => $software_developers, "label" => "Software Developers"),
-    array("y" => $accountants, "label" => "Accountants"),
-    array("y" => $sysadmins, "label" => "System Administrators"),
-    array("y" => $managers, "label" => "Managers"),
+    array("y" => $numOfSoftwareDevelopers, "label" => "Software Developers"),
+    array("y" => $numberOfAccountants, "label" => "Accountants"),
+    array("y" => $numberOfSystemAdministrators, "label" => "System Administrators"),
+    array("y" => $numberOfManagers, "label" => "Managers"),
 );
+
+
+
+function averageSalForEmp($conn, $employeeType){
+
+    $sum = 0;
+    $count_emp = 0;
+
+    $query = "SELECT * from employees";
+    
+    $query_result = mysqli_query($conn, $query);
+
+    // echo "TESt_before_mysqliFetch";
+
+    while($row = mysqli_fetch_array($query_result)){
+        if($row["positionInCompany"] == $employeeType){
+            $sum = $sum + $row["salary"];
+            $count_emp = $count_emp + 1;
+            // echo"Da";
+        }
+    
+
+    }
+
+    if($count_emp != 0)
+        return ($sum / $count_emp); 
+    else
+        return 0;
+}
+
+
+
+$avgSalManager = averageSalForEmp($conn, "Manager");
+echo $avgSalManager;
+echo"<br>";
+
+$avgSalAccountant = averageSalForEmp($conn, "Accountant");
+echo $avgSalAccountant;
+echo"<br>";
+
+$avgSalSoftwareDeveloper = averageSalForEmp($conn, "Software Developer");
+echo $avgSalSoftwareDeveloper;
+echo"<br>";
+
+$avgSalSystemAdministrator = averageSalForEmp($conn, "System Administrator");
+echo $avgSalSystemAdministrator;
+echo"<br>";
+
+
+$employeesAvgSalaries = array(
+    array("y" => $avgSalSoftwareDeveloper, "label" => "Software Developers"),
+    array("y" => $avgSalAccountant, "label" => "Accountants"),
+    array("y" => $avgSalSystemAdministrator, "label" => "System Administrators"),
+    array("y" => $avgSalManager, "label" => "Managers"),
+);
+
 
 ?>
 
     
-<script>
+<script> //NUM OF EMPLOYEES CHART
 window.onload = function() {
  
-var chart = new CanvasJS.Chart("chartContainer", {
+var chart1 = new CanvasJS.Chart("chartContainer1", {
 	animationEnabled: true,
 	title:{
 		text: "Company Employees"
@@ -116,15 +211,49 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		dataPoints: <?php echo json_encode($employeesValues, JSON_NUMERIC_CHECK); ?> // the actual chart => printing the array
 	}]
 });
-chart.render();
+chart1.render();
  
+
+var chart2 = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,
+	title:{
+		text: "Average Salaries"
+	},
+	axisY: {
+		title: "Salaries",
+		includeZero: true,
+		prefix: "",
+		suffix:  ""
+	},
+	data: [{
+		type: "bar",
+		// yValueFormatString: "$#,##0K",
+		indexLabel: "{y}", // the string on the chart(values of each line)
+		indexLabelPlacement: "inside", //inside chart
+		indexLabelFontWeight: "bolder", // text appear more bold
+		indexLabelFontColor: "white", //text color
+		dataPoints: <?php echo json_encode($employeesAvgSalaries, JSON_NUMERIC_CHECK); ?> // the actual chart => printing the array
+	}]
+});
+chart2.render();
+
+
 }
+
 </script>
+
+
+
 </head>
+
+
 <body>
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
+<div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+<div id="chartContainer2" style="height: 370px; width: 100%;"></div>
 
 
 </body>

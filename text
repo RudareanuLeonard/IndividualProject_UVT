@@ -1,6 +1,9 @@
 <?php
-session_start();
+
+session_start(); // start the session
+
 ?>
+
 
 
 <!DOCTYPE html>
@@ -9,88 +12,52 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForgotPassword</title>
-    <link rel="stylesheet" href="./forgotPassword.css">
-</head>
+    <title>WelcomePageAfterLogIn</title>
+    <link rel="stylesheet" href="./LogIn.css">
 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+</head>
 
 <body>
 
-    <!--NAV BAR-->
-    <div class="nav-bar-main-class">
+     <!--NAV BAR-->
+     <div class="nav-bar-main-class">
         <div class="nav-bar-logo">
             <img src="./logo.png" class="nav-bar-logo-img">
         </div>
 
         <div class="nav-bar-links">
 
-            <div class="nav-bar-links-register">
-                <a href="./WelcomePage.html">
+
+        <div class="nav-bar-links-register"> <!--FUNDS BUTTON-->
+                <a href="./welcomePageAfterLogInAccountantCompanyFundsAnalysis.php">
                     <button class="nav-bar-links-register-button">
-                        HOME
+                        Company Funds Analysis
                     </button>
                 </a>
-            </div>            
+            </div>    
 
+            <div class="nav-bar-links-register"> <!--DISCONNECT BUTTON-->
+                <a href="">
+                    <button class="nav-bar-links-register-button">
+                        DISCONNECT
+                    </button>
+                </a>
+            </div>
+            
 
         </div>
 
     </div>
     <!--NAV BAR END-->
 
+<?php
 
-    <!--FORM START-->
 
-     <div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100">
-				<div class="login100-pic js-tilt" data-tilt>
-					<img src="./logo.png" alt="IMG">
-				</div>
-
-				<form class="login100-form validate-form" action="./forgotPassword.php" id="recover_password_form" name="recover_password_form" method="POST">
-					<span class="login100-form-title">
-						Recover Your Password
-					</span>
-
-                    <div class="text-center p-t-12">
-						<span class="txt1">
-						    An email will be sent to you					
-						</span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="email" id="email" placeholder="Email">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
-						</span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate = "Security word is required">
-						<input class="input100" type="text" name="security_word" id="security_word" placeholder="Security word">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-lock" aria-hidden="true"></i>
-						</span>
-					</div>
-					
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" id="recoverPassButton" name="recoverPassButton">
-							Send
-						</button>
-					</div>
-
-					
-
-					
-				</form>
-			</div>
-		</div>
-	</div>
-
-    <?php 
-    
     $myServer = "localhost";
     $usernameConn = "root";
     $passwordConn = "";
@@ -98,142 +65,181 @@ session_start();
 
     $conn = mysqli_connect($myServer, $usernameConn, $passwordConn, $dbnameConn);
 
-    $email_sender = "leonardrudareanu@gmail.com";
-
-    if(!($conn))
-    echo("Nu s-a realizat conexiunea");
+    $sqlValues = "select * from accountant_stuff_database";
+    $query_result = mysqli_query($conn, $sqlValues);
 
 
+    
+    while($row = mysqli_fetch_array($query_result)){
+        $software_developers = $row["numberOfSoftwareDevelopers"];
+        $accountants = $row["numberOfAccountants"];
+        $sysadmins = $row["numberSystemAdministrators"];
+        $managers = $row["numberOfManagers"];
+    }
+
+    echo "software dev = ".$software_developers;
+    echo "<br> accountants = ".$accountants;
+    echo "<br> sysadmins = ".$sysadmins;
+    echo "<br> managers = ".$managers;
+
+$employeesValues = array(
+    array("y" => $software_developers, "label" => "Software Developers"),
+    array("y" => $accountants, "label" => "Accountants"),
+    array("y" => $sysadmins, "label" => "System Administrators"),
+    array("y" => $managers, "label" => "Managers"),
+);
+
+?>
+
+    
+<script> //NUM OF EMPLOYEES CHART
+window.onload = function() {
+ 
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	title:{
+		text: "Company Employees"
+	},
+	axisY: {
+		title: "Employees",
+		includeZero: true,
+		prefix: "",
+		suffix:  ""
+	},
+	data: [{
+		type: "bar",
+		// yValueFormatString: "$#,##0K",
+		indexLabel: "{y}", // the string on the chart(values of each line)
+		indexLabelPlacement: "inside", //inside chart
+		indexLabelFontWeight: "bolder", // text appear more bold
+		indexLabelFontColor: "white", //text color
+		dataPoints: <?php echo json_encode($employeesValues, JSON_NUMERIC_CHECK); ?> // the actual chart => printing the array
+	}]
+});
+chart.render();
+ 
+
+
+
+}
+
+</script>
 
 
 
 
-    if(isset($_POST["recoverPassButton"])){
 
-        $input_email = $_POST["email"];
-        $input_security_word = $_POST["security_word"];
-        $_SESSION["input_email"] = $input_email;
 
-        $searchInSQL = "select * from employees where email = '".$email."'";
+<?php //AVERAGE SALARIES
+    $myServer = "localhost";
+    $usernameConn = "root";
+    $passwordConn = "";
+    $dbnameConn = "manageitproject";
 
-        $query_result = mysqli_query($conn, $searchInSQL);
+    $conn = mysqli_connect($myServer, $usernameConn, $passwordConn, $dbnameConn);
 
-        $_SESSION["inputSecurityWord"] = $input_security_word;
 
-        $searchInSQL = "select * from employees where email = '".$email."'";
 
-        $query_result = mysqli_query($conn, $searchInSQL);
+function averageSalForEmp($conn, $employeeType){
 
-        if(mysqli_num_rows($query_result) > 0)
-        while($row = mysqli_fetch_array($query_result)){
-            $actual_security_word = $row["security_word"];
-            $_SESSION["actualSecurityWord"] = $actual_security_word;
-            $input_email_pass = $row["password"];
-            $_SESSION["someText"] = "someText";
+    $sum = 0;
+    $count_emp = 0;
+
+    $query = "SELECT * from employees";
+    
+    $query_result = mysqli_query($conn, $query);
+
+    // echo "TESt_before_mysqliFetch";
+
+    while($row = mysqli_fetch_array($query_result)){
+        if($row["positionInCompany"] == $employeeType){
+            $sum = $sum + $row["salary"];
+            $count_emp = $count_emp + 1;
+            // echo"Da";
         }
-
-        function sendMail($email_receiver, $password, $email_sender){
-            $receiver = $email_receiver;
-            $subject = "Your Password Request";
-            $body = "Your password is: ".$password;
-            $sender = $email_sender;
-
-            if(mail($receiver, $subject, $body, $sender)){
-
-                echo "success";
-
-            }
-            else 
-                echo "not successfully";
-        }
-
-
-        if(strcmp($_SESSION["inputSecurityWord"], $_SESSION["actualSecurityWord"] ) == 0){
-            sendMail("leonardrudareanu@gmail.com", $_SESSION["password"], $email_sender);
-            $redirectYes = "./mail.php";
-            header('Location: '.$redirectYes);
-        }
-
-
-
-        $redirectYes = "./mail.php";
-        header('Location: '.$redirectYes);
-
+    
 
     }
 
+    if($count_emp != 0)
+        return ($sum / $count_emp); 
+    else
+        return 0;
+}
+
+$avgSalManager = averageSalForEmp($conn, "manager");
+echo $avgSalManager;
+echo"<br>";
+
+$avgSalAccountant = averageSalForEmp($conn, "accountant");
+echo $avgSalAccountant;
+echo"<br>";
+
+$avgSalSoftwareDeveloper = averageSalForEmp($conn, "software developer");
+echo $avgSalSoftwareDeveloper;
+echo"<br>";
+
+$avgSalSystemAdministrator = averageSalForEmp($conn, "system administrator");
+echo $avgSalSystemAdministrator;
+echo"<br>";
 
 
 
-    // if(isset($_POST["recoverPassButton"])){
-    //     $logInURL = "./LogIn.html";
-
-    //     header('Location: '.$logInURL);
-    //     }
-    // else
-    //     echo"nu";
-
-        // $input_email = $_POST["email"];
-        // $input_security_word = $_POST["security_word"];
-
-        // $searchInSQL = "select * from employees where email = '".$email."'";
-
-        // $query_result = mysqli_query($conn, $searchInSQL);
+$employeesAvgSalaries = array(
+    array("y" => $software_developers, "label" => "Software Developers"),
+    array("y" => $accountants, "label" => "Accountants"),
+    array("y" => $sysadmins, "label" => "System Administrators"),
+    array("y" => $managers, "label" => "Managers"),
+);
 
 
-        // if(mysqli_num_rows($query_result) > 0)
-        //     while($row = mysqli_fetch_array($query_result)){
-        //         $actual_security_word = $row["security_word"];
-        //         $input_email_pass = $row["password"];
-        //     }
+// echo "Fadsfads";
 
-    //         $_SESSION["password"] = $input_email_pass;
-    //         $_SESSION["email_sender"] = $email_sender;
-    //         $_SESSION["email"] = $email;
+?>
 
-         
+<script> //SALARIES CHART
+window.onload = function() {
+ 
+var chart2 = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,
+	title:{
+		text: "Company Employees"
+	},
+	axisY: {
+		title: "Employees",
+		includeZero: true,
+		prefix: "",
+		suffix:  ""
+	},
+	data: [{
+		type: "bar",
+		// yValueFormatString: "$#,##0K",
+		indexLabel: "{y}", // the string on the chart(values of each line)
+		indexLabelPlacement: "inside", //inside chart
+		indexLabelFontWeight: "bolder", // text appear more bold
+		indexLabelFontColor: "white", //text color
+		dataPoints: <?php echo json_encode($employeesAvgSalaries, JSON_NUMERIC_CHECK); ?> // the actual chart => printing the array
+	}]
+});
+chart2.render();
+ 
+}
+
+</script>
 
 
-    //     // if(strcmp($input_security_word, $actual_security_word) == 0 )
-    //     //     header('Location: '.$redirectYes);
-    //     // else
-    //     // header('Location: '.$redirectNo);
+
+</head>
 
 
-        // function sendMail($email_receiver, $password, $email_sender){
-        //     $receiver = $email_receiver;
-        //     $subject = "Your Password Request";
-        //     $body = "Your password is: ".$password;
-        //     $sender = $email_sender;
+<body>
 
-        //     if(mail($receiver, $subject, $body, $sender)){
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-        //         echo "success";
-
-        //     }
-        //     else 
-        //         echo "not successfully";
-        // }
-
-
-        // if(strcmp($input_security_word, $actual_security_word) == 0){
-        //     sendMail("leonardrudareanu@gmail.com", $input_email_pass, $email_sender);
-        //     $redirectYes = "./mail.php";
-        //     header('Location: '.$redirectYes);
-        // }
-
-        
-            
-
-    // ?>
-
-    <!--FORM END-->
-
+<div id="chartContainer2"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 
 </body>
-
-
 </html>
-
-
