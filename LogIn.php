@@ -34,7 +34,10 @@ if(isset($_POST["login_form"]))
         //echo "TEST";
         $pos_in_company = $row["positionInCompany"];
         // echo "<br> pos in company = ".$pos_in_company;
-
+        
+        $firstName = $row["firstName"];
+        $lastName = $row["lastName"];
+        $birthDate = $row["birthdate"];
 
         $password = $row["password"];
 
@@ -49,6 +52,10 @@ if(isset($_POST["login_form"]))
         $_SESSION["position_in_company"] = $pos_in_company;
         $_SESSION["password"] = $password;
         $_SESSION["loggedIn"] = "I am logged in";
+        $_SESSION["firstName"] = $firstName;
+        $_SESSION["lastName"] = $lastName;
+        $_SESSION["birthDate"] = $birthDate;
+
 
 
         if(strtolower($pos_in_company) == "accountant"){ // welcome page for accountant

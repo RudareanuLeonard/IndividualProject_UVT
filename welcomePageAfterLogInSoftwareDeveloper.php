@@ -48,13 +48,22 @@ session_start(); // start the session
     </div>
     <!--NAV BAR END-->
 
+    <?php
+
+    if(isset($_POST["disconnect-button"])){
+    session_destroy();
+    $welcomePageBeforeLogIn = "./welcomePage.html";
+    header('Location: '.$welcomePageBeforeLogIn);
+    }
+    
+    ?>
+
 
     <div class="control-panel">
         Select Language:
       
         <select id="languages" class="languages" onchange="changeLanguage()">
-            <option value="php"> PHP </option>
-            <option value="python"> Python </option>
+            <option value="py"> Python </option>
         </select>
     </div>
     <div class="editor" id="editor"></div>
@@ -82,8 +91,7 @@ function changeLanguage() {
     let language = $("#languages").val();
 
     
-    if(language == 'php')editor.session.setMode("ace/mode/php");
-    else if(language == 'python')editor.session.setMode("ace/mode/python");
+    if(language == 'python')editor.session.setMode("ace/mode/python");
 
 }
 
@@ -91,7 +99,7 @@ function executeCode() {
 
     $.ajax({
 
-        url: "/ide/app/compiler.php",
+        url: "compiler.php",
 
         method: "POST",
 
