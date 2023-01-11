@@ -18,7 +18,7 @@ session_start(); // start the session
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-
+    <link rel="stylesheet" href="C:/xampp/htdocs/ProiectIndividual/font-awesome/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -59,6 +59,55 @@ session_start(); // start the session
     ?>
 
 
+
+<div id="body-no-sidebar" class="body-no-sidebar">
+
+ <!--   SIDE BAR  START -->
+ <div class="menu" id="menu">
+        <div class="logo">
+            <img src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg" alt="" style="border-radius: 50%;">
+            <h2 style="color:white; text-align:center">Employee details</h2>
+        </div>
+
+        <div class="items">
+            <li>
+            <i class="fa fa-building" aria-hidden="true" style="color: white;"></i><a href="#"><?php echo $_SESSION["position_in_company"];?></a>
+            </li>
+
+            <li>
+            <i class="fa fa-id-card" aria-hidden="true" style="color:white"></i><a href="#">
+                <?php 
+                echo   $_SESSION["lastName"]." ".$_SESSION["firstName"];
+                ?>
+                                                                                </a>
+            </li>
+
+            <li>
+            <i class="fa fa-birthday-cake" aria-hidden="true" style="color: white;"></i><a href="#">
+            <?php 
+                echo   $_SESSION["birthDate"];
+            ?>
+                                                                                        </a>
+            </li>
+                
+                
+            <!-- <li>
+            <i class="fa fa-birthday-cake" aria-hidden="true" style="color: white;"></i><a href="#">Tasks: 
+            <?php 
+                echo $_SESSION["tasks"];
+            ?>
+                                                                                        </a>
+            </li> -->
+
+            </li>
+
+        </div>
+
+    </div>
+    <!--- SIDE BAR END  --->
+
+
+<div class="compilator-class">
     <div class="control-panel">
         Select Language:
       
@@ -68,9 +117,13 @@ session_start(); // start the session
     </div>
     <div class="editor" id="editor"></div>
 
+    
     <div class="button-container">
-        <button class="btn" onclick="executeCode()"> Run </button>
+        
+        <button class="btn" onclick="executeCode()" id="run-button"> Run </button>
+        
     </div>
+    
 
     <div class="output"></div>
 
@@ -114,6 +167,8 @@ function executeCode() {
     })
 }
     </script>
+    </div>
     
+</div>
 
 </body>

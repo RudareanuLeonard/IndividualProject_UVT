@@ -40,6 +40,7 @@ if(isset($_POST["login_form"]))
         $birthDate = $row["birthdate"];
 
         $password = $row["password"];
+        $tasks = $row["tasks"];
 
 
     }
@@ -55,11 +56,12 @@ if(isset($_POST["login_form"]))
         $_SESSION["firstName"] = $firstName;
         $_SESSION["lastName"] = $lastName;
         $_SESSION["birthDate"] = $birthDate;
+        $_SESSION["tasks"] = $tasks;
 
 
 
         if(strtolower($pos_in_company) == "accountant"){ // welcome page for accountant
-        $welcomePageAfterLogInAccountant = "./welcomePageAfterLogInAccountantCompanyFundsAnalysis.php";
+        $welcomePageAfterLogInAccountant = "./welcomePageAfterLogInCompanyEmployees.php";
         header('Location: '.$welcomePageAfterLogInAccountant);
         }
 

@@ -33,14 +33,7 @@ session_start(); // start the session
         <div class="nav-bar-links">
 
 
-        <div class="nav-bar-links-register"> <!--FUNDS BUTTON-->
-                <a href="./welcomePageAfterLogInAccountantCompanyFundsAnalysis.php">
-                    <button class="nav-bar-links-register-button">
-                        Company Funds Analysis
-                    </button>
-                </a>
-            </div>    
-
+       
             <div class="nav-bar-links-register"> <!--DISCONNECT BUTTON-->
                 <a href="">
                 <form method="POST">
@@ -116,10 +109,10 @@ session_start(); // start the session
         if($row["positionInCompany"] == "Manager")
             $numberOfManagers = $numberOfManagers + 1;
     }
-echo"SD = ".$numOfSoftwareDevelopers."<br>";
-echo"Acc = ".$numberOfAccountants."<br>";
-echo"SA = ".$numberOfSystemAdministrators."<br>";
-echo "MA =".$numberOfManagers."<br>";
+// echo"SD = ".$numOfSoftwareDevelopers."<br>";
+// echo"Acc = ".$numberOfAccountants."<br>";
+// echo"SA = ".$numberOfSystemAdministrators."<br>";
+// echo "MA =".$numberOfManagers."<br>";
 
 $employeesValues = array(
     array("y" => $numOfSoftwareDevelopers, "label" => "Software Developers"),
@@ -160,20 +153,20 @@ function averageSalForEmp($conn, $employeeType){
 
 
 $avgSalManager = averageSalForEmp($conn, "Manager");
-echo $avgSalManager;
-echo"<br>";
+// echo $avgSalManager;
+// echo"<br>";
 
 $avgSalAccountant = averageSalForEmp($conn, "Accountant");
-echo $avgSalAccountant;
-echo"<br>";
+// echo $avgSalAccountant;
+// echo"<br>";
 
 $avgSalSoftwareDeveloper = averageSalForEmp($conn, "Software Developer");
-echo $avgSalSoftwareDeveloper;
-echo"<br>";
+// echo $avgSalSoftwareDeveloper;
+// echo"<br>";
 
 $avgSalSystemAdministrator = averageSalForEmp($conn, "System Administrator");
-echo $avgSalSystemAdministrator;
-echo"<br>";
+// echo $avgSalSystemAdministrator;
+// echo"<br>";
 
 
 $employeesAvgSalaries = array(

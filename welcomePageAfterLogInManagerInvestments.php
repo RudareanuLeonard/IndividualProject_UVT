@@ -78,7 +78,7 @@ $conn = mysqli_connect($myServer, $usernameConn, $passwordConn, $dbnameConn);
     <!--   SIDE BAR  START -->
     <div class="menu" id="menu">
         <div class="logo">
-            <img src="./facebookLogo.png" alt="">
+        <img src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg" alt="" style="border-radius: 50%;">
             <h2 style="color:white; text-align:center">Employee details</h2>
         </div>
 
